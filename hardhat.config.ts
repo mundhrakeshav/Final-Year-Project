@@ -11,12 +11,13 @@ task("accounts", "Prints the list of accounts", async () => {
   const accounts = await hre.ethers.getSigners();
   for (const account of accounts) {
     console.log(account.address);
+
   }
 });
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.0",
+    version: "0.7.6",
     settings: {
       optimizer: {
         enabled: true,
@@ -29,7 +30,11 @@ const config: HardhatUserConfig = {
     gasPrice: 21
   },
   networks: {
-
+    hardhat: {
+      forking: {
+        url: "https://mainnet.infura.io/v3/5297f2437c744cf384665ce6a3722c29",
+      }
+    }
   }
 };
 
