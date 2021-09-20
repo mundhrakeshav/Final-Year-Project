@@ -38,8 +38,8 @@ const config: HardhatUserConfig = {
     }
   },
   tenderly: {
-		username: "mundhrakeshav",
-		project: "playground"
+		username: "<Username>",
+		project: "<project>"
 	}
 };
 
