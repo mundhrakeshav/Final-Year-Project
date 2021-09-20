@@ -79,7 +79,7 @@ const driver = async () => {
   await approveTokens(liquidityProvider.address);
   await checkAllowance(liquidityProvider.address, owner);
   
-  await liquidityProvider.mintNewPosition();
+  await liquidityProvider.mintNewPosition({gasLimit: 12_450_000});
 
 }
  

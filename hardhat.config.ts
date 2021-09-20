@@ -1,6 +1,7 @@
 import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomiclabs/hardhat-waffle";
 import "solidity-coverage";
+import "@tenderly/hardhat-tenderly";
 import "hardhat-gas-reporter";
 import dotenv from 'dotenv';
 dotenv.config();
@@ -35,7 +36,11 @@ const config: HardhatUserConfig = {
         url: "https://mainnet.infura.io/v3/5297f2437c744cf384665ce6a3722c29",
       }
     }
-  }
+  },
+  tenderly: {
+		username: "mundhrakeshav",
+		project: "playground"
+	}
 };
 
 export default config;

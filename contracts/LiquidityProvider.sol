@@ -9,7 +9,7 @@ import '@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol';
 import '@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol';
 import '@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol';
 import '@uniswap/v3-periphery/contracts/base/LiquidityManagement.sol';
-
+import 'hardhat/console.sol';
 contract LiquidityProvider is IERC721Receiver {
   address public constant DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
     address public constant USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
@@ -100,10 +100,11 @@ contract LiquidityProvider is IERC721Receiver {
                 recipient: address(this),
                 deadline: block.timestamp
             });
-
+        console.log("Test1");
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
         (tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager.mint(params);
 
+        console.log(tokenId);
         // Create a deposit
         _createDeposit(msg.sender, tokenId);
 
