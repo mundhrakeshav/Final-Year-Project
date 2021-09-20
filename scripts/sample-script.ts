@@ -7,6 +7,19 @@ async function main() {
   const greeter = await Greeter.deploy("Hello, Hardhat!");
   await greeter.deployed();
   console.log("Greeter deployed to:", greeter.address);
+  
+  // run "tenderly login" to login 
+  // push contract to tenderly
+  //   await hre.tenderly.persistArtifacts({
+  //   name: "Greeter",
+  //   address: greeter.address
+  // });
+  
+  // await hre.tenderly.verify({
+  //   name: "Greeter",
+  //   address: greeter.address,
+  // })
+  //tenderly export <tx hash> to export a tx
 }
 
 main()
