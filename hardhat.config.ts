@@ -10,6 +10,8 @@ dotenv.config();
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async () => {
   const accounts = await hre.ethers.getSigners();
+  console.log(`https://mainnet.infura.io/v3/${process.env.INFURA_KEY}`);
+  
   for (const account of accounts) {
     console.log(account.address);
 
@@ -33,7 +35,7 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       forking: {
-        url: "https://mainnet.infura.io/v3/5297f2437c744cf384665ce6a3722c29",
+        url: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}` ,
       }
     }
   },
