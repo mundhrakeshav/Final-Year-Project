@@ -29,7 +29,11 @@ const config: HardhatUserConfig = {
     gasPrice: 21
   },
   networks: {
-
+    hardhat: {
+      forking: {
+        url: `https://mainnet.infura.io/v3/${process.env.INFURA_KEY}` 
+      }
+    }
   }
 };
 
