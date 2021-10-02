@@ -12,6 +12,8 @@ task("accounts", "Prints the list of accounts", async () => {
   for (const account of accounts) {
     console.log(account.address);
   }
+    console.log(`https://rinkeby.infura.io/v3/${process.env.INFURA_KEY}`);
+
 });
 
 const config: HardhatUserConfig = {
@@ -29,7 +31,11 @@ const config: HardhatUserConfig = {
     gasPrice: 21
   },
   networks: {
-
+    rinkeby: {
+      url: `https://rinkeby.infura.io/v3/${process.env.INFURA_KEY}`,
+      accounts: [`${process.env.PRIVATE_KEY}`]
+    
+    }
   }
 };
 
