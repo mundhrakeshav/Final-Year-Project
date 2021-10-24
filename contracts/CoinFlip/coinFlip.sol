@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
-
+// 0xea50237f8b533B13eb30340c1E09cCc9bc4db99B
 // This is a coin flipping game where you need to build up your winning streak by guessing the outcome of a coin flip. To complete this level you'll need to use your psychic abilities to guess the correct outcome 10 times in a row.
 import '@openzeppelin/contracts/math/SafeMath.sol';
 contract CoinFlip {
