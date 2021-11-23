@@ -1,22 +1,11 @@
-# Node
 node_modules/
 
-# Hardhat
-cache/
-artifacts/
-
-# Deployments
-deployments/
-
-# Typechain
-typechain/
-
-# Env
+node_modules
 .env
-
-# Coverage
-coverage/
+coverage
 coverage.json
+typechain
 
-package-lock.json
-hardhat.config.js
+#Hardhat files
+cache
+artifacts
