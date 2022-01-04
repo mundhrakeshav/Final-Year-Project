@@ -1,12 +1,13 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.4;
 
-import "hardhat/console.sol";
+// import "hardhat/console.sol";
 import "./EIP712Base.sol";
 
 contract StateChannel is EIP712Base("EIP712Base", "1") {
     uint private challengeDuration = 12 hours;
-    uint public expiresAt;
+    uint private txAddedAt;
+
     address payable[2] public users;
     mapping (address => bool) public isUser;
 
@@ -34,29 +35,27 @@ contract StateChannel is EIP712Base("EIP712Base", "1") {
     }
 
     constructor(address payable[2] memory _users
-    // , uint _expiresAt
     )  {
         users = _users;
         isUser[_users[0]] = true;
         isUser[_users[1]] = true;
-        // expiresAt = _expiresAt;
-        console.log(address(this));
     }
 
     function addTransaction(Transaction memory transactionToBeAdded) public checkCaller {
         transactionToBeExecuted = transactionToBeAdded;
+        txAddedAt = block.timestamp;
     }
 
     function executeTransaction() public checkCaller {
+        require(block.timestamp >= txAddedAt + challengeDuration, "INVALID: Cannot be executed before challenge period");
         transactionToBeExecuted.to.call{value: transactionToBeExecuted.value}(transactionToBeExecuted.data);
     }
 
-    function challenge(Transaction[2] memory recentTransactions,Signature[2] memory signatures) public {
-        for (uint256 index = 0; index < recentTransactions.length; index++) {
-            verify(recentTransactions[index], signatures[index]);
-        }
-        require(recentTransactions[0].nonce > transactionToBeExecuted.nonce, "Invalid Nonce");
+    function challenge(Transaction memory recentTransaction, Signature memory signature) public {
+        require(recentTransaction.nonce > transactionToBeExecuted.nonce, "Invalid Nonce");
+        verify(recentTransaction, signature);
         delete transactionToBeExecuted;
+        transactionToBeExecuted = recentTransaction;
     }
 
     function hashTransaction(Transaction memory transaction) internal pure returns (bytes32) {
@@ -70,14 +69,14 @@ contract StateChannel is EIP712Base("EIP712Base", "1") {
         ));
     }
 
-    function verify(Transaction memory transaction, Signature memory signature) public view {
-        console.log(signature.v);
-        console.logBytes32(signature.r);
-        console.logBytes32(signature.s);
-        
+    function verify(Transaction memory transaction, Signature memory signature) public view { 
         address signer = ecrecover(toTypedMessageHash(hashTransaction(transaction)), signature.v, signature.r, signature.s);
         require(signer != address(0), "Invalid signature");
         require(signer == transaction.from, "UnVerified");
+    }
+
+    fallback() external payable {
+        // console.log("INVALID: Invalid Transaction");
     }
 
 } 
